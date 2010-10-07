@@ -39,7 +39,7 @@ end
 
 if ARGV.length > 0
   if ['help', '-h', '?', '-?'].include? ARGV[0]
-    puts "Usage: setup_as_app [app_name] [js_lib] [database] [db_user] [db_password]"
+    puts "Usage: one_step_active_scaffold [app_name] [js_lib] [database] [db_user] [db_password]"
     puts "app_name   : name of your rails application ; default: howto"
     puts "js_lib     : valid Values: #{JS_LIBS.to_s}; default: prototype"
     puts "database   : valid values: #{DATABASES.to_s}; default: sqlite3"
