@@ -1,0 +1,23 @@
+A really basic script to create a new rails 3 application using active_scaffold and a player and team model.
+Afterwards you can just say rails s to start your application.
+
+Please note that you need git up and running in your shell.
+In addition your database setup needs to be up and running.
+
+ruby one_step_activescaffold.rb -h
+
+Usage: one_step_activescaffold [app_name] [js_lib] [database] [db_user] [db_password]
+app_name   : name of your rails application ; default: howto
+js_lib     : valid Values: ["prototype", "jquery"]; default: prototype
+database   : valid values: ["sqlite3", "mysql", "postgresl", "oracle", "frontbase", "ibm_db"]; default: sqlite3
+db_user    : username for your db; default: <db_specific>
+db_password: pasword for your db user; default: ''
+
+
+Examples:
+ruby one_step_activescaffold_app.rb
+
+ruby one_step_activescaffold_app.rb my_new_app jquery mysql
+
+ruby one_step_activescaffold_app.rb my_new_app jquery postgres john top_secret
+
