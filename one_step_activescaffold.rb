@@ -19,24 +19,6 @@ end
 JS_LIBS = ['prototype', 'jquery']
 DATABASES = ['sqlite3', 'mysql', 'postgresl', 'oracle', 'frontbase', 'ibm_db']
 
-
-def configure_mysql(rails_app, db_user, db_password)
-  inject_into_file('config/database.yml', config, /#{environment}:.*?5000/m)
-  ['development', 'test', 'production'].each do |environment|
-    config = MYSQL_CONFIG.sub(/{rails_app}/, rails_app).gsub(/{environment}/, environment).sub(/{db_user}/, db_user).sub(/{db_password}/, db_password)
-    
-  end
-end
-
-def configure_postgres(rails_app, db_user, db_password)
-  inject_into_file('Gemfile', "gem 'mysql2'\n" + '\0', /\z/)
-  ['development', 'test', 'production'].each do |environment|
-    config = POSTGRES_CONFIG.sub(/{rails_app}/, rails_app).gsub(/{environment}/, environment).sub(/{db_user}/, db_user).sub(/{db_password}/, db_password)
-    inject_into_file('config/database.yml', config, /#{environment}:.*?5000/m)
-  end
-end
-
-
 if ARGV.length > 0
   if ['help', '-h', '?', '-?'].include? ARGV[0]
     puts "Usage: one_step_active_scaffold [app_name] [js_lib] [database] [db_user] [db_password]"
@@ -82,12 +64,19 @@ puts "Setup activescaffold using #{js_lib}..."
 system "rails g active_scaffold_setup #{js_lib}"
 
 #Create ActiveScaffolds
-puts "ActiveScaffold Team..."
-puts %x[rails g active_scaffold Team name:string position:integer]
 
-puts "ActiveScaffold Players..."
-puts %x[rails g active_scaffold Player name:string injured:boolean salary:decimal date_of_birth:date  team:references]
-inject_into_file('app/models/team.rb', '\0' + "  has_many :players\n", /ActiveRecord::Base\n/)
+if(File.exist?('../model_setup.rb'))
+  puts "Calling model_setup.rb"
+  require '../model_setup.rb'
+else
+  puts "ActiveScaffold Team..."
+  puts %x[rails g active_scaffold Team name:string position:integer]
+
+  puts "ActiveScaffold Players..."
+  puts %x[rails g active_scaffold Player name:string injured:boolean salary:decimal date_of_birth:date  team:references]
+  inject_into_file('app/models/team.rb', '\0' + "  has_many :players\n", /ActiveRecord::Base\n/)
+end
+
 
 puts "Migrate Database..."
 puts %x[rake db:migrate]
