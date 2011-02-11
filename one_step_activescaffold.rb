@@ -52,7 +52,13 @@ inject_into_file('config/database.yml', "username: #{db_user}", /username:.*/) u
 inject_into_file('config/database.yml', "password: #{db_password}", /password:.*/) unless db_password.nil?
 
 puts "add activescaffold gem..."
-inject_into_file('Gemfile', '\0' + "gem 'render_component_vho', :git => 'git://github.com/vhochstein/render_component.git'\ngem 'active_scaffold_vho', :git => 'git://github.com/vhochstein/active_scaffold.git'\n", /Bundle the extra gems:\n/)
+begin
+  %x[git --version]
+  inject_into_file('Gemfile', '\0' + "gem 'render_component_vho', :git => 'git://github.com/vhochstein/render_component.git'\ngem 'active_scaffold_vho', :git => 'git://github.com/vhochstein/active_scaffold.git'\n", /Bundle the extra gems:\n/)
+rescue
+ #git not installed
+  inject_into_file('Gemfile', '\0' + "gem 'active_scaffold_vho'\n", /Bundle the extra gems:\n/)
+end
 
 puts "Execute bundle install ..."
 puts %x[bundle install]
