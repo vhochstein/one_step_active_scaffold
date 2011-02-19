@@ -26,5 +26,3 @@ Dir.glob("db/migrate/*create_{employees,managers,customers}.rb").each {|migratio
 
 
 
-
-
