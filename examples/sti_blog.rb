@@ -5,7 +5,7 @@ puts "ActiveScaffold Department..."
 puts %x[rails g active_scaffold Department name:string]
 
 puts "ActiveScaffold Person.."
-puts %x[rails g active_scaffold Person name:string email:string balance:decimal report_to:integer department_id:integer]
+puts %x[rails g active_scaffold Person type:string name:string email:string balance:decimal report_to:integer department_id:integer]
 
 puts "ActiveScaffold Employee.."
 puts %x[rails g active_scaffold Employee]
