@@ -17,11 +17,11 @@ If you do not want to create a player and a team model, you can specify your own
 
 
 Examples:
-ruby one_step_activescaffold_app.rb
+ruby one_step_activescaffold.rb
 
-ruby one_step_activescaffold_app.rb my_new_app jquery mysql
+ruby one_step_activescaffold.rb my_new_app jquery mysql
 
-ruby one_step_activescaffold_app.rb my_new_app jquery postgres john top_secret
+ruby one_step_activescaffold.rb my_new_app jquery postgres john top_secret
 
 model_setup.rb:
 puts %x[rails g active_scaffold coach name:string]
